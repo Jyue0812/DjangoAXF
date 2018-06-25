@@ -1,6 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 # Create your views here.
+from App.forms.forms import LoginForm
 from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, UserInfo, ShopCar
 
 
@@ -89,20 +90,6 @@ def mine(request):
     return render(request, 'mine/mine.html', context=data)
 
 
-# def login(request):
-#     user_info = request.session.get("user_info")
-#
-#     if not user_info:
-#         user_name = request.POST.get("user_name")
-#         user_pass = request.POST.get("user_pass")
-#
-#         user = UserInfo.objects.filter(user_name=user_name).first()
-#         if user:
-#             if user.pass_word == user_pass:
-#                 request.session["user_name"] = user_name
-#                 return redirect("/home/")
-#             # return
-#         # return
 
 
 def add_shopcar(request):
@@ -156,3 +143,32 @@ def sub_shopcar(request):
         data["result_code"] = '1007'
         data["message"] = 'goods not exit'
     return JsonResponse(data)
+
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            print("****")
+            name = form.cleaned_data["username"]
+            pswd = form.cleaned_data["passwd"]
+            return redirect('/mine/')
+        else:
+            return render(request, 'mine/login.html', {"error":form.errors})
+    else:
+        form = LoginForm()
+        data = {"form":form}
+        return render(request, 'mine/login.html', data)
+#     user_info = request.session.get("user_info")
+#
+#     if not user_info:
+#         user_name = request.POST.get("user_name")
+#         user_pass = request.POST.get("user_pass")
+#
+#         user = UserInfo.objects.filter(user_name=user_name).first()
+#         if user:
+#             if user.pass_word == user_pass:
+#                 request.session["user_name"] = user_name
+#                 return redirect("/home/")
+#             # return
+#         # return
