@@ -1,0 +1,87 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/market/market.css' %}">
+{% endblock %}
+{% block content %}
+    <div id="market">
+        <aside>
+            <ul>
+                {% for foo in foodtypes %}
+                    <li>
+                        <a href="/market/?typeid={{ foo.typeid }}&childid=0">{{ foo.typename }}</a>
+                        {% ifequal typeid foo.typeid %}
+                            <span class="yellowSlide"></span>
+                        {% endifequal %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <section>
+            <nav>
+                <ul>
+                    <li id="alltypes"><span>全部分类 <span class="glyphicon glyphicon-menu-down"></span></span></li>
+                    <li id="orderbys"><span>综合排序 <span class="glyphicon glyphicon-menu-down"></span></span></li>
+                </ul>
+            </nav>
+            <menu>
+                <div id="alltype" style="display: none">
+                    <div>
+                        {% for foo in childList %}
+
+                        <a href="/market/?typeid={{ typeid }}&childid={{ foo.id }}">
+                            <span>{{ foo.name }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="orderby" style="display: none">
+                    <div>
+                        <a href="/market/?typeid={{ typeid }}&childid={{ childid }}&orderby=0">
+                            <span>综合排序</span>
+                        </a>
+                        <a href="/market/?typeid={{ typeid }}&childid={{ childid }}&orderby=1">
+                            <span>销量最高</span>
+                        </a>
+                        <a href="/market/?typeid={{ typeid }}&childid={{ childid }}&orderby=2">
+                            <span>价格最低</span>
+                        </a>
+                        <a href="/market/?typeid={{ typeid }}&childid={{ childid }}&orderby=3">
+                            <span>价格最高</span>
+                        </a>
+                    </div>
+                </div>
+                <ul>
+                    {% for foo in goods %}
+                        <li>
+                            <a href="">
+                                <img src="{{ foo.productimg }}" alt="">
+                                <div class="shoppingInfo">
+                                    <h6>{{ foo.productlongname }}</h6>
+                                    <p class="detailTag">
+                                        <span>精选</span>
+                                        <span></span>
+                                    </p>
+                                    <p class="unit">{{ foo.specifics }}</p>
+                                    <p class="price"><span>{{ foo.price }}</span><s>{{ foo.marketprice }}</s></p>
+                                </div>
+                            </a>
+                            <section>
+                                <button id="minShopCar"  goodsid = {{ foo.productid }} class="subShopping">-</button>
+                                <span id="shopcar_number">0</span>
+                                <button id="plusShopCar" goodsid = {{ foo.productid }} class="addShopping">+</button>
+
+                            </section>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </menu>
+        </section>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/market/market.js' %}"></script>
+{% endblock %}
