@@ -26,6 +26,7 @@ urlpatterns = [
     path('mine/', views.mine),
     path('add_shopcar/', views.add_shopcar),
     path('sub_shopcar/', views.sub_shopcar),
-    path('login/', views.login),
+    path('login/', views.loginp),
+    path('logout/', views.logoutp),
     path('register/', views.register),
 ]

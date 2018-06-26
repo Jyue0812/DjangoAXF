@@ -1,8 +1,8 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-# Create your views here.
-from App.forms.forms import LoginForm, RegisterForm
-from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, UserInfo, ShopCar
+from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, ShopCar
 
 
 def home(request):
@@ -71,7 +71,6 @@ def market(request):
         "childList": childList,
         "childid": childid,
         "orderby": orderby,
-
     }
     return render(request, 'market/market.html', context=data)
 
@@ -81,67 +80,60 @@ def cart(request):
         'title': '购物车'
     }
 
-    user_id = request.session.get('user_id')
+    user_id = request.session.get('_auth_user_id')
+
     if not user_id:
         return render(request, 'mine/login.html', {'error': '用户或者密码错误'})
     else:
-        shopcars = ShopCar.objects.filter(user__id=user_id)
-        return render(request, 'cart/cart.html', {'shopcars': shopcars, 'title': '购物车'})
+        shopcars = ShopCar.objects.filter(user__id = user_id)
+        print(shopcars)
+        # shopcars = ShopCar.objects.filter(goods__id = goods_id )
+        # print(shopcars)
+        # shopcars = ShopCar.objects.all()
+        return render(request, 'cart/cart.html', {'title': '购物车', 'shopcars': shopcars})
 
 
 def mine(request):
+    username = request.session.get("username", "未登录")
     data = {
         "title": "我的",
+        "username":username
     }
     return render(request, 'mine/mine.html', context=data)
 
 
 
 # 做登陆
-def login(request):
-    if request.method == 'GET':
+def loginp(request):
+    if request.method == 'POST':
+        username = request.POST["username"]
+        request.session["username"] = username
+        user = authenticate(request, username = request.POST["username"], password = request.POST["userpass"])
+        if user is None:
+            return HttpResponse("用户名或密码有误，请重新输入")
+        else:
+            login(request, user)
+            return redirect('/home/')
+    else:
         return render(request, 'mine/login.html')
 
-    # 先去会话里面查找用户是否登陆
-    user_info = request.session.get('user_info')
-
-    # 没有登陆，执行登陆过程，并且保存ｕｓｅｒ
-    if not user_info:
-
-        user_name = request.POST.get('userName')
-        user_pass = request.POST.get('userPass')
-
-        # 执行登陆
-        user = UserInfo.objects.filter(user_name=user_name).first()
-
-        if user:
-
-            if user.user_passwd == user_pass:
-                # session里面能否保存一个　对象（还是说只能保存一个ｊｓｏｎ串)
-                request.session['user_info'] = user_name
-                request.session['user_id'] = user.id
-                return render(request, 'home/home.html')
-
-        return render(request, 'mine/login.html', {'error': '用户或者密码错误'})
-
-    return render(request, 'home/home.html')
-
+def logoutp(request):
+    logout(request)
+    return render(request, 'mine/login.html')
 
 # 添加到购物车
 def add_shopcar(request):
-    user_id = request.session.get('user_id')
-
+    user_id = request.session.get('_auth_user_id')
     data = {}
-
     if not user_id:
         data['result_code'] = '10009'
         data['message'] = 'no login'
     else:
-
         goods_id = request.POST.get('goodsid')  # 获取商品ｉｄ
 
         # 去购物车查询一下，如果商品存在，就对数量进行加减，如果商品不存在，直接添加该商品
         shopcar = ShopCar.objects.filter(goods__id=goods_id).first()
+        print(shopcar)
 
         if shopcar:
             shopcar.number = shopcar.number + 1
@@ -158,7 +150,7 @@ def add_shopcar(request):
     return JsonResponse(data)
 
 def sub_shopcar(request):
-    user_id = request.session.get('user_id')
+    user_id = request.session.get('_auth_user_id')
     data = {}
 
     if not user_id:
@@ -196,19 +188,4 @@ def sub_shopcar(request):
     return JsonResponse(data)
 
 def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['passwd']
-            # 添加到数据库
-            registAdd = UserInfo.objects.get_or_create(user_name=username, user_passwd=password)[1]
-            user = UserInfo.objects.filter(user_name=username).first()
-            request.session["user_info"] = username
-            request.session["user_id"] = user.id
-            # User.objects.get_or_create(username = username,password = password)
-
-            return render(request, 'mine/mine.html', {'registAdd': registAdd, 'username': username})
-    else:
-        form = RegisterForm()
-    return render(request, 'mine/register.html', {"title":"注册", "form":form})
+    return render(request, 'mine/register.html', {"title":"注册"})

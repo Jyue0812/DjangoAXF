@@ -46,13 +46,15 @@ $(function () {
     //添加到购物车
     $('.addShopping').click(function(){
         var ele = $(this);
+        console.info($(this).attr('goodsid'));
+        console.info($(this).attr('class'));
         //商品ｉｄ
         $.ajax({
             url:'/add_shopcar/',
             data:{'goodsid':$(this).attr('goodsid')},
             type:'post',
             success:function(result){
-
+                console.log(result);
                 //代表没有登陆，我们需要跳转到登陆页面
                 if(result.result_code == '10009'){
 

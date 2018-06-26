@@ -15,25 +15,25 @@
 
     <div id="cart">
 
-        <ul>
-            <li><input type="checkbox" name="allselect" id="allselect"></li>
-
-            {% for shopcar in shopcars %}
-                <li>
-                    <input type="checkbox" name="shopping" id="{{ shopcar.id }}"
-
-                           {% if shopcar.isselect %}
-                                checked="checked"
-                           {% endif %}
-                    >
-
-                    <img src="{{ shopcar.goods.productimg }}" style="width: 1.5rem;height: 1.5rem;">
-                    <span>{{ shopcar.goods.productlongname }}</span>
-                    <span>{{ shopcar.number }}</span>
-                </li>
-            {% endfor %}
-
-        </ul>
+{#        <ul>#}
+{#            <li><input type="checkbox" name="allselect" id="allselect"></li>#}
+{##}
+{#            {% for shopcar in shopcars %}#}
+{#                <li>#}
+{#                    <input type="checkbox" name="shopping" id="{{ shopcar.id }}"#}
+{##}
+{#                           {% if shopcar.isselect %}#}
+{#                                checked="checked"#}
+{#                           {% endif %}#}
+{#                    >#}
+{##}
+{#                    <img src="{{ shopcar.goods_id }}" style="width: 1.5rem;height: 1.5rem;">#}
+{#                    <span>{{ goods.productlongname }}</span>#}
+{#                    <span>{{ shopcar.goods }}</span>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{##}
+{#        </ul>#}
 
     </div>
 

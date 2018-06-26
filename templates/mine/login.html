@@ -6,25 +6,25 @@
     <link rel="stylesheet" href="{% static 'css/mine/login.css' %}">
 {% endblock %}
 {% block content %}
-    <div id="login">
+    <div id="login container">
         <a href="/mine/">
             <p>返回</p>
         </a>
         <div id="box">
-            <form action="/login/" method="post">
+            <form action="/login/" method="post" class="col-sm-4">
 
                 <ul>
                     <li>
-                        用户名 <input name="userName" type="text"/>
+                        用户名 <input class="form-control" name="username" type="text"/>
                     </li>
                     <li>
 
-                        密码 <input name="userPass" type="password"/>
+                        密码 <input class="form-control" name="userpass" type="password"/>
                     </li>
                 </ul>
 
 
-                <button type="submit">登录</button>
+                <button type="submit" class="btn btn-default">登录</button>
             </form>
         </div>
     </div>

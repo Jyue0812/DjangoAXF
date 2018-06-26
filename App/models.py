@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -101,15 +102,7 @@ class Goods(models.Model):
         db_table= 'axf_goods'
 
 
-class UserInfo(models.Model):
-    user_name = models.CharField(max_length=20)
-    user_passwd = models.CharField(max_length=20)
-
-    class Meta:
-        db_table = 'axf_userinfo'
-
-
 class ShopCar(models.Model):
     goods = models.ForeignKey(Goods,on_delete=1)
-    user = models.ForeignKey(UserInfo,on_delete=2)
+    user = models.ForeignKey(User,on_delete=2)
     number = models.IntegerField(default=1)
