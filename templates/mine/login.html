@@ -12,22 +12,19 @@
         </a>
         <div id="box">
             <form action="/login/" method="post">
-            {% csrf_token %}
-                <div class="input-group">
-                    {{ form.username }}
-                    <br/>
-                    {% if error.username.0 %}
-                        <span>{{ error.username.0 }}</span>
-                    {% endif %}
-                </div>
-                <div class="input-group">
-                    {{ form.passwd }}
-                    <br/>
-                    {% if error.passwd.0 %}
-                        <span>{{ error.passwd.0 }}</span>
-                    {% endif %}
-                </div>
-                <div><input type="submit">登录</div>
+
+                <ul>
+                    <li>
+                        用户名 <input name="userName" type="text"/>
+                    </li>
+                    <li>
+
+                        密码 <input name="userPass" type="password"/>
+                    </li>
+                </ul>
+
+
+                <button type="submit">登录</button>
             </form>
         </div>
     </div>

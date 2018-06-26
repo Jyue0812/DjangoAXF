@@ -27,4 +27,5 @@ urlpatterns = [
     path('add_shopcar/', views.add_shopcar),
     path('sub_shopcar/', views.sub_shopcar),
     path('login/', views.login),
+    path('register/', views.register),
 ]

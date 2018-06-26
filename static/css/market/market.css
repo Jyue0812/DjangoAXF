@@ -177,18 +177,19 @@ section > button {
   color: red;
   display: inline-block;
   text-align: center;
-  line-height: 0.55rem;
+  line-height: 0.4rem;
   font-weight: 900;
-  width: 0.5rem;
-  height: 0.5rem; }
+  width: 0.4rem;
+  height: 0.4rem; }
 li > section > span {
   display: inline-block;
   width: 0.4rem;
   text-align: center;
   line-height: 0.4rem; }
 .subShopping {
-  font-size: 0.8rem;
-  font-weight: 100; }
+  /*font-size: 0.8rem;*/
+  /*font-weight: 100; */
+}
 
 
 

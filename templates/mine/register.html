@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mine/register.css' %}"/>
+{% endblock %}
+
+
+{% block content %}
+    <div id="register">
+        <a href="/mine/">
+            <p>返回</p>
+        </a>
+        <div id="box">
+            <form action="/register/" method="post">
+                <div class="col-md-4">
+                    <ul>
+                        <li>
+                            {{ form.username }}
+                        </li>
+                        <li>
+                            {{ form.passwd }}
+                        </li>
+                    </ul>
+                </div>
+                <button type="submit">注册</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

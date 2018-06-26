@@ -102,19 +102,14 @@ class Goods(models.Model):
 
 
 class UserInfo(models.Model):
-    userAccount = models.CharField(max_length=20, unique=True)
-    userPasswd = models.CharField(max_length=20)
-    userName = models.CharField(max_length=20)
-    userPhone = models.CharField(max_length=20)
-    userAddress = models.CharField(max_length=100)
-    # userImg = models.CharField(max_length=150)
-    # userRank = models.IntegerField()
+    user_name = models.CharField(max_length=20)
+    user_passwd = models.CharField(max_length=20)
 
     class Meta:
         db_table = 'axf_userinfo'
 
 
 class ShopCar(models.Model):
-    goods =models.ForeignKey(Goods, on_delete=CASCADE)
-    # user = models.ForeignKey(UserInfo, on_delete=CASCADE)
+    goods = models.ForeignKey(Goods,on_delete=1)
+    user = models.ForeignKey(UserInfo,on_delete=2)
     number = models.IntegerField(default=1)

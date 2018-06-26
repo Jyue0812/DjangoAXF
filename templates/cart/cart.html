@@ -1,11 +1,42 @@
 {% extends 'base_main.html' %}
 {% load static %}
 
-{% block css %}
-    {{ block.super }}
+{% block extCSS %}
+{# 加载父页面的样式 #}
+{{block.super}}
     <link rel="stylesheet" href="{% static 'css/cart/cart.css' %}">
 {% endblock %}
 
+{% block extJS %}
+    <script type="text/javascript" src="{% static 'js/cart/cart.js' %}"></script>
+{% endblock %}
+
 {% block content %}
-    <div id="cart">cart</div>
+
+    <div id="cart">
+
+        <ul>
+            <li><input type="checkbox" name="allselect" id="allselect"></li>
+
+            {% for shopcar in shopcars %}
+                <li>
+                    <input type="checkbox" name="shopping" id="{{ shopcar.id }}"
+
+                           {% if shopcar.isselect %}
+                                checked="checked"
+                           {% endif %}
+                    >
+
+                    <img src="{{ shopcar.goods.productimg }}" style="width: 1.5rem;height: 1.5rem;">
+                    <span>{{ shopcar.goods.productlongname }}</span>
+                    <span>{{ shopcar.number }}</span>
+                </li>
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+
 {% endblock %}
