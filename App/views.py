@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, ShopCar
@@ -188,4 +189,13 @@ def sub_shopcar(request):
     return JsonResponse(data)
 
 def register(request):
-    return render(request, 'mine/register.html', {"title":"注册"})
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = authenticate(username=form.cleaned_data["username"], password=form.cleaned_data["password1"])
+            login(request, user)
+            return redirect('/home/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'mine/register.html', {"title":"注册", "form":form})

@@ -11,21 +11,12 @@
             <p>返回</p>
         </a>
         <div id="box">
-            <form action="/login/" method="post" class="col-sm-4">
-
-                <ul>
-                    <li>
-                        用户名 <input class="form-control" name="username" type="text"/>
-                    </li>
-                    <li>
-
-                        密码 <input class="form-control" name="userpass" type="password"/>
-                    </li><li>
-
-                        确认密码 <input class="form-control" name="userpass2" type="password"/>
-                    </li>
-                </ul>
-
+{#            {% if form.errors %}#}
+{#                <p>{{ form.errors }}</p>#}
+{#            {% endif %}#}
+            <form action="" method="post" class="col-sm-4">
+                {% csrf_token %}
+                {{ form.as_p }}
 
                 <button type="submit" class="btn btn-default">登录</button>
             </form>
