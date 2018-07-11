@@ -102,7 +102,22 @@ class Goods(models.Model):
         db_table= 'axf_goods'
 
 
-class ShopCar(models.Model):
-    goods = models.ForeignKey(Goods,on_delete=1)
-    user = models.ForeignKey(User,on_delete=2)
-    number = models.IntegerField(default=1)
+class Cart(models.Model):
+    userAccount = models.CharField(max_length=10)
+    productid = models.CharField(max_length=10)
+    productnum = models.IntegerField()
+    productprice = models.CharField(max_length=10)
+    isChose = models.BooleanField(default=True)
+    productimg = models.CharField(max_length=150)
+    productname = models.CharField(max_length=100)
+    orderid = models.CharField(max_length=20, default="0")
+    isDelete = models.BooleanField(default=False)
+
+    @classmethod
+    def createcart(cls, userAccount, productid, productnum, productprice, isChose, productimg, productname, isDelete):
+        c = cls(userAccount=userAccount, productid=productid, productnum=productnum, productprice=productprice,
+                isChose=isChose, productimg=productimg, productname=productname, isDelete=isDelete)
+        return c
+    class Meta:
+        db_table= 'axf_cart'
+

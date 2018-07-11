@@ -9,7 +9,7 @@
   padding-bottom: 1.5rem; }
 
 
-.mine dl dt span{
+.mine dl dt .wo {
   background: url(/static/img/mine_selected.png) no-repeat;
   background-size:0.513889rem;
 }
@@ -24,10 +24,10 @@
   padding-top: 0.5rem; }
 .fixed > span {
   display: block;
-  width: 2rem;
-  height: 2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   float: left;
-  margin: 0 0.3rem 0;
+  margin: 0 0.2rem 0;
   font-size: 1.5rem;
   color: black;
   background: white;
@@ -111,3 +111,11 @@
   width: 100%;
   display: block;
   float: none; }
+
+#nav li a {
+  color: #9d9d9d;
+}
+
+#mine menu ul li a {
+  color: #9d9d9d;
+}

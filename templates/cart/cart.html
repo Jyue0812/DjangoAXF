@@ -1,41 +1,92 @@
 {% extends 'base_main.html' %}
 {% load static %}
 
-{% block extCSS %}
-{# 加载父页面的样式 #}
-{{block.super}}
+{% block css %}
+    {# 加载父页面的样式 #}
+    {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/cart/cart.css' %}">
 {% endblock %}
 
-{% block extJS %}
+{% block js %}
     <script type="text/javascript" src="{% static 'js/cart/cart.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
     <div id="cart">
+        <h3><b>购物车</b></h3>
 
-{#        <ul>#}
-{#            <li><input type="checkbox" name="allselect" id="allselect"></li>#}
-{##}
-{#            {% for shopcar in shopcars %}#}
-{#                <li>#}
-{#                    <input type="checkbox" name="shopping" id="{{ shopcar.id }}"#}
-{##}
-{#                           {% if shopcar.isselect %}#}
-{#                                checked="checked"#}
-{#                           {% endif %}#}
-{#                    >#}
-{##}
-{#                    <img src="{{ shopcar.goods_id }}" style="width: 1.5rem;height: 1.5rem;">#}
-{#                    <span>{{ goods.productlongname }}</span>#}
-{#                    <span>{{ shopcar.goods }}</span>#}
-{#                </li>#}
-{#            {% endfor %}#}
-{##}
-{#        </ul>#}
+        <section class="full">
+            <section>
+                <ul>
+                    <li>
+                        订单配送至
+                    </li>
+                    <li>
+                        上海市杨浦区邯郸路220号复旦大学5号楼502室
+                    </li>
+                    <li>
+                        <p><span>王先生&nbsp&nbsp</span><span>13585457415</span><a class="change">修改></a></p>
+                    </li>
+                </ul>
 
+
+                <section class="bill">
+                    <p>闪送超市</p>
+                    <p>¥20起送,22:00前满¥30免配送费</p>
+                    <a>去凑单 > </a>
+                </section>
+
+                <section class="delivery">
+                    <span>送达时间</span> <span>一小时送达</span> <a>可预订></a>
+                </section>
+                <section class="delivery">
+                    <span>收货备注</span> <input type="text" placeholder="可输入100字以内特殊要求内容"/>
+                </section>
+
+
+                <menu>
+                    <ul>
+                        {% for item in allgoods %}
+                            <li id="{{ item.productid }}li" class="menuList">
+                                <div class="confirm">
+                            <span class="ischose" goodsid="{{ item.productid }}">
+                                <span id="{{ item.productid }}a">
+                                {% ifequal True item.isChose %}
+                                    √
+                                {% endifequal %}
+                                </span>
+                            </span>
+                                </div>
+                                <a href="#">
+                                    <img src="{{ item.productimg }}"/>
+                                    <p>{{ item.productname }}</p>
+                                    <span id="{{ item.productid }}price"
+                                          class="{{ productprice }}">￥{{ item.productprice }}</span>
+                                </a>
+                                <section>
+                                    <button class="subShopping" ga="{{ item.productid }}">-</button>
+                                    <span id="{{ item.productid }}">{{ item.productnum }}</span>
+                                    <button class="addShopping" ga="{{ item.productid }}">+</button>
+                                </section>
+                            </li>
+                        {% endfor %}
+
+                        <li class="payTheBill">
+                            <div class="confirm"><span><span>
+                            {% if trueFlag %}
+                                √
+                            {% endif %}
+                        </span></span></div>
+                            <p><span>全选</span><span>共计:</span><span>总价</span></p>
+                            <a id="ok">去支付</a>
+                        </li>
+                    </ul>
+                </menu>
+            </section>
+        </section>
     </div>
+
 
 
 

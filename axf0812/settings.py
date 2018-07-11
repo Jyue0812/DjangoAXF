@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'DjangoAXF.urls'
+ROOT_URLCONF = 'axf0812.urls'
 
 TEMPLATES = [
     {
@@ -66,7 +66,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'DjangoAXF.wsgi.application'
+WSGI_APPLICATION = 'axf0812.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -79,9 +79,6 @@ DATABASES = {
         'PASSWORD': '123456',
         'PORT': '3306',
         'HOST': 'localhost',
-        'OPTIONS': {
-            "init_command": "SET foreign_key_checks = 0;",
-        }
     }
 }
 

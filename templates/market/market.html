@@ -65,7 +65,7 @@
                                         <span></span>
                                     </p>
                                     <p class="unit">{{ foo.specifics }}</p>
-                                    <p class="price"><span>{{ foo.price }}</span><s>{{ foo.marketprice }}</s></p>
+                                    <p class="price"><span>￥{{ foo.price }}</span><s>￥{{ foo.marketprice | cut:"0000" }}</s></p>
                                 </div>
                             </a>
                             <section>

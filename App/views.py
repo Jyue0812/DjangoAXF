@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, ShopCar
+from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, Cart
 
 
 def home(request):
@@ -41,8 +41,6 @@ def market(request):
     fts = FoodTypes.objects.filter(typeid=typeid).first()
     child = fts.childtypenames
 
-
-
     childList = []
     for foo in child.split("#"):
         ft = foo.split(":")
@@ -77,21 +75,14 @@ def market(request):
 
 
 def cart(request):
-    data = {
-        'title': '购物车'
-    }
-
     user_id = request.session.get('_auth_user_id')
+    print(user_id)
 
     if not user_id:
         return render(request, 'mine/login.html', {'error': '用户或者密码错误'})
     else:
-        shopcars = ShopCar.objects.filter(user__id = user_id)
-        print(shopcars)
-        # shopcars = ShopCar.objects.filter(goods__id = goods_id )
-        # print(shopcars)
-        # shopcars = ShopCar.objects.all()
-        return render(request, 'cart/cart.html', {'title': '购物车', 'shopcars': shopcars})
+        allgoods = Cart.objects.filter(userAccount=user_id)
+        return render(request, 'cart/cart.html', {'title': '购物车', "allgoods":allgoods})
 
 
 def mine(request):
@@ -122,7 +113,7 @@ def logoutp(request):
     logout(request)
     return render(request, 'mine/login.html')
 
-# 添加到购物车
+# # 添加到购物车
 def add_shopcar(request):
     user_id = request.session.get('_auth_user_id')
     data = {}
@@ -131,29 +122,23 @@ def add_shopcar(request):
         data['message'] = 'no login'
     else:
         goods_id = request.POST.get('goodsid')  # 获取商品ｉｄ
-
         # 去购物车查询一下，如果商品存在，就对数量进行加减，如果商品不存在，直接添加该商品
-        shopcar = ShopCar.objects.filter(goods__id=goods_id).first()
-        print(shopcar)
-
+        shopcar = Cart.objects.filter(productid=goods_id).filter(userAccount=user_id).first()
         if shopcar:
-            shopcar.number = shopcar.number + 1
+            shopcar.productnum = shopcar.productnum + 1
             shopcar.save()
         else:
-            shopcar = ShopCar()  # 构建一条购物车的数据
-            # shopcar.user_id = user_id
-            shopcar.goods_id = goods_id
-            shopcar.save()
-
+            goods = Goods.objects.filter(productid=goods_id).first()
+            c = Cart.createcart(user_id, goods_id, "1", goods.price, True, goods.productimg, goods.productlongname, False)  # 构建一条购物车的数据
+            c.save()
         data['result_code'] = '10000'
         data['message'] = 'success'
-        data['number'] = shopcar.number
+        data['number'] = shopcar.productnum
     return JsonResponse(data)
 
 def sub_shopcar(request):
     user_id = request.session.get('_auth_user_id')
     data = {}
-
     if not user_id:
         data['result_code'] = '10009'
         data['message'] = 'no login'
@@ -161,27 +146,25 @@ def sub_shopcar(request):
         goods_id = request.POST.get('goodsid')
 
         # 去购物车查询一下，如果商品存在，就对数量进行加减，如果商品不存在，直接添加该商品
-        shopcar = ShopCar.objects.filter(goods__id=goods_id).first()
+        shopcar = Cart.objects.filter(productid=goods_id).filter(userAccount=user_id).first()
 
         #如果商品存在，就代表需要进行加减
         if shopcar:
-
             #如果商品数量等于一个，就需要从购物车删除这个商品
-            if shopcar.number <= 1:
+            if shopcar.productnum <= 1:
 
                 shopcar.delete()
-
                 data['result_code'] = '10008'
                 data['message'] = 'delete success'
                 data['number'] = 0
 
             #数量进行－１
             else:
-                shopcar.number = shopcar.number-1
+                shopcar.productnum = shopcar.productnum-1
                 shopcar.save()
                 data['result_code'] = '10000'
                 data['message'] = 'success'
-                data['number'] = shopcar.number
+                data['number'] = shopcar.productnum
         else:
             data['result_code'] = '10007'
             data['message'] = 'goods not exist'

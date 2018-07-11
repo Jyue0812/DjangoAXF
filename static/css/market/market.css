@@ -29,11 +29,11 @@ aside ul li {
   z-index: +1; }
 aside ul li a {
   display: block;
-  font-size: 0.35rem;
+  font-size: 0.3rem;
   color: grey;
   z-index: +1; }
 .yellowSlide {
-  background: yellow;
+  background: orangered;
   width: 0.1rem;
   height: 0.7rem;
   position: absolute;
@@ -127,13 +127,13 @@ section menu ul li a img {
   height: 0.5rem;
   white-space: nowrap;
   font-weight: 500;
-  font-size: 0.38rem; }
+  font-size: 0.32rem; }
 
 /****细节标签*********/
 .detailTag {
   margin: 0.2rem 0; }
 .detailTag span {
-  border: 0.03rem solid red;
+  border: 0.02rem solid red;
   border-radius: 0.15rem;
   padding: 0 0.1rem;
   color: white;
@@ -141,13 +141,14 @@ section menu ul li a img {
   margin-right: 0.3rem; }
 .detailTag span:first-child {
   background: white;
-  font-size:16px;
+  font-size:.2rem;
   color: red; }
 /******单位**********/
 .unit {
   color: grey;
   position: absolute;
-  bottom: 1rem; }
+  font-size:.25rem;
+}
 .price {
   position: absolute;
   bottom: 0.15rem;
@@ -169,6 +170,7 @@ li > section {
   right: 0.4rem;
   bottom: 0.4rem;
   height: 0.75rem;
+  top: 1.5rem;
   border-radius: 1rem; }
 section > button {
   background: white;
