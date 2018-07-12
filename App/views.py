@@ -1,9 +1,11 @@
+import random
+import time
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, Cart
+from App.models import WheelModel, NavModel, MustBuyModel, ShopModel, MainShow, FoodTypes, Goods, Cart, Order
 
 
 def home(request):
@@ -76,7 +78,6 @@ def market(request):
 
 def cart(request):
     user_id = request.session.get('_auth_user_id')
-    print(user_id)
 
     if not user_id:
         return render(request, 'mine/login.html', {'error': '用户或者密码错误'})
@@ -152,7 +153,6 @@ def sub_shopcar(request):
         if shopcar:
             #如果商品数量等于一个，就需要从购物车删除这个商品
             if shopcar.productnum <= 1:
-
                 shopcar.delete()
                 data['result_code'] = '10008'
                 data['message'] = 'delete success'
@@ -182,3 +182,22 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'mine/register.html', {"title":"注册", "form":form})
+
+def saveorder(request):
+    # 判断用户是否登录
+    user_id = request.session.get('_auth_user_id')
+
+    if not user_id:
+        return render(request, 'mine/login.html', {'error': '用户或者密码错误'})
+    else:
+        carts = Cart.objects.all()
+        if carts.count() == 0:
+            return JsonResponse({"data": -1, "status": "error"})
+
+        oid = time.time() + random.randrange(1, 10000)
+        oid = "%d"%oid
+        o = Order.createorder(oid,user_id,0)
+        o.save()
+        carts.delete()
+
+        return redirect('/mine/')

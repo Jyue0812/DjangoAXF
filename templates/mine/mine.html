@@ -9,7 +9,7 @@
     <div id="mine">
         <section class="fixed">
             <span></span>
-            <p><a href="/login/">{{ username }}</a></p>
+            <p><a href="/login/" class="username">{{ username }}</a></p>
             <p><span class="glyphicon glyphicon-fire"></span><span>等级</span></p>
             {% if not user.is_authenticated %}
             <a id="regis" href="/register/">注册</a>

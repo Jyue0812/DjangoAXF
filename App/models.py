@@ -121,3 +121,13 @@ class Cart(models.Model):
     class Meta:
         db_table= 'axf_cart'
 
+
+class Order(models.Model):
+    orderid = models.CharField(max_length=20)
+    userid  = models.CharField(max_length=20)
+    progress = models.IntegerField()
+
+    @classmethod
+    def createorder(cls, orderid, userid, progress):
+        o = cls(orderid=orderid, userid=userid, progress=progress)
+        return o

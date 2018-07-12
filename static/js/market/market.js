@@ -8,7 +8,7 @@ $(function () {
         $(this).children().children().toggleClass("glyphicon glyphicon-menu-down glyphicon glyphicon-menu-up");
     });
     
-             //添加到购物车
+             //移除购物车
     $('.subShopping').click(function(){
 
         //商品ｉｄ
@@ -74,4 +74,4 @@ $(function () {
 
 
     });
-})
+});

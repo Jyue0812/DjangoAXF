@@ -7,24 +7,28 @@
 {% endblock %}
 {% block content %}
     <div id="login container">
-        <a href="/mine/">
-            <p>返回</p>
+        <div class="head">
+            <a class="back" href="/mine/">
+            <span class="glyphicon glyphicon-menu-left">
+
+            </span>
         </a>
+            <p class="text-center">登录</p>
+        </div>
+
+
         <div id="box">
             <form action="/login/" method="post" class="col-sm-4">
-
                 <ul>
                     <li>
-                        用户名 <input class="form-control" name="username" type="text"/>
+                         <input name="username" type="text" placeholder="请输入用户名"/>
                     </li>
                     <li>
-
-                        密码 <input class="form-control" name="userpass" type="password"/>
+                         <input name="userpass" type="password" placeholder="请输入密码"/>
                     </li>
                 </ul>
-
-
-                <button type="submit" class="btn btn-default">登录</button>
+                <button type="submit">登&nbsp&nbsp录</button>
+                <p class="text-center">忘记密码？&nbsp&nbsp请 <a href="#">找回密码</a></p>
             </form>
         </div>
     </div>

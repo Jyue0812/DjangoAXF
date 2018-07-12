@@ -13,3 +13,41 @@
     color: #e62e2e;
     display: none;
 }
+
+
+.head {
+    width: 100%;
+    height: 1.5rem;
+    background-color: #fff;
+    border-bottom: 0.015rem solid #e3e3e3;
+    color: #000;
+}
+
+.head a {
+    color: #000;
+}
+.head p {
+    line-height:1.5rem;
+    font-size: .45rem;
+    font-weight: 700;
+}
+.back {
+    position: absolute;
+    left: .6rem;
+    top: .5rem;
+}
+input {
+    border: 0px;
+}
+
+button {
+    border:0px;
+    width: 100%;
+    height: 1.2rem;
+    background-color: #e7e7e7;
+    border-radius: 1.5%;
+    font-weight: 700;
+    color: #5e5e5e;
+    margin-top: 1rem;
+    margin-bottom:0.3rem;
+}
